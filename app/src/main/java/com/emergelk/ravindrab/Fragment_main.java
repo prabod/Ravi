@@ -1,8 +1,5 @@
 package com.emergelk.ravindrab;
 
-/**
- * Created by prabod on 11/22/15.
- */
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -28,14 +25,12 @@ public class Fragment_main extends ListFragment implements AdapterView.OnItemCli
     private ArrayList<HashMap<String, String>> list;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_main, null, false);
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         list = new ArrayList<HashMap<String, String>>();
+
+        final LeaderBoardAdapter adapter = new LeaderBoardAdapter(getActivity(), list);
+        setListAdapter(adapter);
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("LeaderBoard");
         query.orderByDescending("Marks");
@@ -57,16 +52,19 @@ public class Fragment_main extends ListFragment implements AdapterView.OnItemCli
                     );
                     list.add(temp);
                 }
+                adapter.notifyDataSetChanged();
             }
         });
 
-        LeaderBoardAdapter adapter = new LeaderBoardAdapter(getActivity(), list);
-        setListAdapter(adapter);
 
         getListView().setOnItemClickListener(this);
 
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_main, container, false);
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

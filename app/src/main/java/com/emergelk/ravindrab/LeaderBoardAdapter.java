@@ -1,6 +1,7 @@
 package com.emergelk.ravindrab;
 
 import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +11,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by prabod on 11/22/15.
- */
+
 public class LeaderBoardAdapter extends BaseAdapter {
 
     public ArrayList<HashMap<String, String>> list;
     Activity activity;
+    LayoutInflater inflater;
     TextView txtFirst;
     TextView txtSecond;
     TextView txtThird;
@@ -46,10 +46,11 @@ public class LeaderBoardAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = activity.getLayoutInflater();
+        if (inflater == null)
+            inflater = (LayoutInflater) activity
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-
             convertView = inflater.inflate(R.layout.leaderboard, null);
 
             txtFirst = (TextView) convertView.findViewById(R.id.name);
@@ -57,6 +58,10 @@ public class LeaderBoardAdapter extends BaseAdapter {
             txtThird = (TextView) convertView.findViewById(R.id.marks);
             txtFourth = (TextView) convertView.findViewById(R.id.rank);
 
+            txtFirst.setVisibility(View.VISIBLE);
+            txtSecond.setVisibility(View.VISIBLE);
+            txtThird.setVisibility(View.VISIBLE);
+            txtFourth.setVisibility(View.VISIBLE);
         }
 
         HashMap<String, String> map = list.get(position);

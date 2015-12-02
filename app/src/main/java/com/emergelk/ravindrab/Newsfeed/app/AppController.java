@@ -9,6 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.emergelk.ravindrab.Newsfeed.Volley.LruBitmapCache;
+import com.parse.Parse;
 
 public class AppController extends Application {
 
@@ -25,6 +26,9 @@ public class AppController extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "JpDHcZPYDuJ8yj3GcmVAPoyWkUxZCCbep54HtOs2", "m55mmi6azeW2tPYB9us0kosAmTEwktaNwfigtxoG");
+
         mInstance = this;
     }
 

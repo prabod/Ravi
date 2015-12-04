@@ -31,6 +31,8 @@ import com.parse.SignUpCallback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -111,7 +113,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mPhoneView.setError(getString(R.string.error_invalid_password));
             focusView = mPhoneView;
             cancel = true;
+        } else if (!TextUtils.isEmpty(indexR) && !isIndexValid(indexR)) {
+            mIndexR.setError(getString(R.string.error_invalid_index));
+            focusView = mIndexR;
+            cancel = true;
+        } else if (!TextUtils.isEmpty(indexT) && !isIndexValid(indexT)) {
+            mIndexT.setError(getString(R.string.error_invalid_index));
+            focusView = mIndexT;
+            cancel = true;
         }
+
 
 
         if (cancel) {
@@ -132,6 +143,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return password.length() == 10;
     }
 
+    private boolean isIndexValid(String index) {
+        String pattern = "^[a-zA-Z]{2}[r,tR,T]*[\\d]{5}$";
+        Pattern pattern1 = Pattern.compile(pattern);
+        Matcher matcher = pattern1.matcher(index);
+        return matcher.find();
+    }
     /**
      * Shows the progress UI and hides the login form.
      */

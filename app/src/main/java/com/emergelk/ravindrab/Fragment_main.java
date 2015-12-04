@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -25,7 +26,7 @@ public class Fragment_main extends ListFragment implements AdapterView.OnItemCli
 
     private List<ParseObject> students;
     private ArrayList<HashMap<String, String>> list;
-    private ArrayList<String> batches;
+    private ArrayList<String> classes;
     private ArrayList<String> towns;
 
     @Override
@@ -33,7 +34,7 @@ public class Fragment_main extends ListFragment implements AdapterView.OnItemCli
         super.onCreate(savedInstanceState);
         list = new ArrayList<HashMap<String, String>>();
         towns = new ArrayList<>();
-        batches = new ArrayList<>();
+        classes = new ArrayList<>();
 
         final LeaderBoardAdapter adapter = new LeaderBoardAdapter(getActivity(), list);
         setListAdapter(adapter);
@@ -45,14 +46,58 @@ public class Fragment_main extends ListFragment implements AdapterView.OnItemCli
                 android.R.layout.simple_spinner_dropdown_item, towns);
         aTowns.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sTowns.setAdapter(aTowns);
+        sTowns.setPrompt("Ranking Method");
 
-        Spinner sBatches = (Spinner) getView().findViewById(R.id.spinner2);
-        sBatches.setOnItemSelectedListener(this);
+        Spinner sClass = (Spinner) getView().findViewById(R.id.spinner2);
+        sClass.setOnItemSelectedListener(this);
         ArrayAdapter<String> aBatches;
         aBatches = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_dropdown_item, batches);
+                android.R.layout.simple_spinner_dropdown_item, classes);
+
+        sClass.setPrompt("Select Class");
+        sClass.setAdapter(aBatches);
         aBatches.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sBatches.setAdapter(aBatches);
+
+        towns.add("All Classes");
+        ParseInstallation currentUser = ParseInstallation.getCurrentInstallation();
+        String indexR = (String) currentUser.get("indexR");
+        String indexT = (String) currentUser.get("indexT");
+        String codeR = indexR != null ? indexR.substring(0, 2) : null;
+        String codeT = indexT != null ? indexT.substring(0, 2) : null;
+        String code = codeR != null ? codeR : (codeT != null ? codeT : null);
+        String town;
+        Log.d("class", code);
+
+        switch (code) {
+            case "BW":
+                town = "Bandarawela";
+                break;
+            case "KY":
+                town = "Kandy";
+                break;
+            case "KE":
+                town = "Kegalle";
+                break;
+            case "KU":
+                town = "Kurunagala";
+                break;
+            default:
+                town = null;
+                break;
+        }
+        towns.add(town);
+        classes.add("Theory");
+        classes.add("Revision");
+        sTowns.setSelection(1);
+        String ltr = (String) indexR.subSequence(2, 3);
+        if (indexR != null && (ltr == "R" || ltr.matches("\\d"))) {
+            sClass.setSelection(1);
+        } else if (indexT != null) {
+            sClass.setSelection(0);
+        }
+        Log.d("sel", String.valueOf(sClass.getSelectedItem()));
+        Log.d("3rd", ltr);
+        /*
 
         //spinner for batches
         ParseQuery<ParseObject> Qbatch = ParseQuery.getQuery("Batches");
@@ -78,7 +123,7 @@ public class Fragment_main extends ListFragment implements AdapterView.OnItemCli
                 }
             }
         });
-
+        */
         //LeaderBoard query
         ParseQuery<ParseObject> query = ParseQuery.getQuery("LeaderBoard");
         query.orderByDescending("Marks");

@@ -43,33 +43,43 @@ public class LeaderBoardAdapter extends BaseAdapter {
         return 0;
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (inflater == null)
             inflater = (LayoutInflater) activity
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+        final ViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.leaderboard, null);
+            holder = new ViewHolder();
+            holder.txtFirst = (TextView) convertView.findViewById(R.id.name);
+            holder.txtSecond = (TextView) convertView.findViewById(R.id.town);
+            holder.txtThird = (TextView) convertView.findViewById(R.id.marks);
+            holder.txtFourth = (TextView) convertView.findViewById(R.id.rank);
 
-            txtFirst = (TextView) convertView.findViewById(R.id.name);
-            txtSecond = (TextView) convertView.findViewById(R.id.town);
-            txtThird = (TextView) convertView.findViewById(R.id.marks);
-            txtFourth = (TextView) convertView.findViewById(R.id.rank);
+            holder.txtFirst.setVisibility(View.VISIBLE);
+            holder.txtSecond.setVisibility(View.VISIBLE);
+            holder.txtThird.setVisibility(View.VISIBLE);
+            holder.txtFourth.setVisibility(View.VISIBLE);
+            convertView.setTag(holder);
 
-            txtFirst.setVisibility(View.VISIBLE);
-            txtSecond.setVisibility(View.VISIBLE);
-            txtThird.setVisibility(View.VISIBLE);
-            txtFourth.setVisibility(View.VISIBLE);
-        }
+        } else holder = (ViewHolder) convertView.getTag();
 
         HashMap<String, String> map = list.get(position);
-        txtFirst.setText(map.get("Name"));
-        txtSecond.setText(map.get("Town"));
-        txtThird.setText(map.get("Marks"));
-        txtFourth.setText(map.get("Rank"));
-
+        holder.txtFirst.setText(map.get("Name"));
+        holder.txtSecond.setText(map.get("Town"));
+        holder.txtThird.setText(map.get("Marks"));
+        holder.txtFourth.setText(map.get("Rank"));
         return convertView;
+
+    }
+
+    class ViewHolder {
+
+        TextView txtFirst;
+        TextView txtSecond;
+        TextView txtThird;
+        TextView txtFourth;
+
     }
 }

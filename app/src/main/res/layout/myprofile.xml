@@ -5,33 +5,22 @@
     android:background="@drawable/bg_leaderboard">
 
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/papername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingLeft="5dp"
-        android:textSize="16sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/town"
+        android:id="@+id/marksPaper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="16sp" />
+        android:layout_weight="0.25" />
 
     <TextView
-        android:id="@+id/marks"
+        android:id="@+id/rankPaper"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/rank"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:textSize="16sp" />
+        android:layout_weight="0.25" />
 
 </LinearLayout>

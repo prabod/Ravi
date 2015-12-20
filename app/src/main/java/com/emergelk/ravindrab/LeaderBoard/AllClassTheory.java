@@ -54,28 +54,30 @@ public class AllClassTheory extends ListFragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        if (theoryPaper != null) {
+            ParseQuery<ParseObject> papertQuery = ParseQuery.getQuery(theoryPaper.get("papertype").toString() +
+                    theoryPaper.get("batch").toString() +
+                    theoryPaper.get("paperNo").toString());
+            papertQuery.orderByDescending("marks");
+            papertQuery.whereExists("rank");
+            papertQuery.setLimit(10);
+            final ParseObject finalTheoryPaper = theoryPaper;
+            try {
+                theory = papertQuery.find();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-        ParseQuery<ParseObject> papertQuery = ParseQuery.getQuery(theoryPaper.get("papertype").toString() +
-                theoryPaper.get("batch").toString() +
-                theoryPaper.get("paperNo").toString());
-        papertQuery.orderByDescending("marks");
-        papertQuery.setLimit(10);
-        final ParseObject finalTheoryPaper = theoryPaper;
-        try {
-            theory = papertQuery.find();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+            for (int i = 0; i < theory.size(); i++) {
 
-        for (int i = 0; i < theory.size(); i++) {
+                HashMap<String, String> temp = new HashMap<String, String>();
+                temp.put("Name", String.valueOf(theory.get(i).get("index")));
+                temp.put("Town", String.valueOf(theory.get(i).get("index")).substring(0, 2));
+                temp.put("Marks", String.valueOf(theory.get(i).get("marks")));
+                temp.put("Rank", String.valueOf(theory.get(i).get("rank")));
 
-            HashMap<String, String> temp = new HashMap<String, String>();
-            temp.put("Name", String.valueOf(theory.get(i).get("index")));
-            temp.put("Town", String.valueOf(theory.get(i).get("index")).substring(0, 2));
-            temp.put("Marks", String.valueOf(theory.get(i).get("marks")));
-            temp.put("Rank", String.valueOf(theory.get(i).get("rank")));
-
-            list.add(temp);
+                list.add(temp);
+            }
         }
         adapter.notifyDataSetChanged();
     }

@@ -59,26 +59,29 @@ public class AllClassRevision extends ListFragment {
             e.printStackTrace();
             Log.d("rev", "onActivityCreated:error");
         }
-        ParseQuery<ParseObject> paperQuery = ParseQuery.getQuery(revPaper.get("papertype").toString() +
-                revPaper.get("batch").toString() +
-                revPaper.get("paperNo").toString());
-        paperQuery.orderByDescending("marks");
-        paperQuery.setLimit(10);
-        try {
-            revision = paperQuery.find();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        if (revPaper != null) {
+            ParseQuery<ParseObject> paperQuery = ParseQuery.getQuery(revPaper.get("papertype").toString() +
+                    revPaper.get("batch").toString() +
+                    revPaper.get("paperNo").toString());
+            paperQuery.orderByDescending("marks");
+            paperQuery.whereExists("rank");
+            paperQuery.setLimit(10);
+            try {
+                revision = paperQuery.find();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
 
-        for (int i = 0; i < revision.size(); i++) {
+            for (int i = 0; i < revision.size(); i++) {
 
-            HashMap<String, String> temp = new HashMap<String, String>();
-            temp.put("Name", String.valueOf(revision.get(i).get("index")));
-            temp.put("Town", String.valueOf(revision.get(i).get("index")).substring(0, 2));
-            temp.put("Marks", String.valueOf(revision.get(i).get("marks")));
-            temp.put("Rank", String.valueOf(revision.get(i).get("rank")));
+                HashMap<String, String> temp = new HashMap<String, String>();
+                temp.put("Name", String.valueOf(revision.get(i).get("index")));
+                temp.put("Town", String.valueOf(revision.get(i).get("index")).substring(0, 2));
+                temp.put("Marks", String.valueOf(revision.get(i).get("marks")));
+                temp.put("Rank", String.valueOf(revision.get(i).get("rank")));
 
-            list.add(temp);
+                list.add(temp);
+            }
         }
         adapter.notifyDataSetChanged();
     }

@@ -38,13 +38,13 @@ public class Fragment_main extends Fragment {
         mTabHost = (FragmentTabHost) mainView.findViewById(android.R.id.tabhost);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.tabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("fragmenta").setIndicator("All Class Revision"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmenta").setIndicator("All 4G LTE R"),
                 AllClassRevision.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("All Class Theory"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("All 4G LTE T"),
                 AllClassTheory.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("Revision"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("4G LTE Revision"),
                 TownRevision.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("Theory"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("4G LTE Theory"),
                 TownTheory.class, null);
 
         return mainView;

@@ -1,10 +1,11 @@
 package com.emergelk.ravindrab;
 
-import android.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
@@ -18,8 +19,8 @@ import java.util.List;
 
 public class Fragment_third extends ListFragment {
     String town;
-    LeaderBoardAdapter adapter;
-    private List<ParseObject> theorytwn;
+    MyProfileAdapter adapter;
+
     private ArrayList<HashMap<String, String>> list;
 
     @Override
@@ -27,57 +28,66 @@ public class Fragment_third extends ListFragment {
         super.onActivityCreated(savedInstanceState);
         list = new ArrayList<HashMap<String, String>>();
 
-        adapter = new LeaderBoardAdapter(getActivity(), list);
+        adapter = new MyProfileAdapter(getActivity(), list);
         setListAdapter(adapter);
 
         String year;
-        ParseInstallation currentUser = ParseInstallation.getCurrentInstallation();
-        String indexR = (String) currentUser.get("indexR");
-        String indexT = (String) currentUser.get("indexT");
-        String codeR = indexR.length() != 0 ? indexR.substring(0, 2) : null;
-        String codeT = indexT.length() != 0 ? indexT.substring(0, 2) : null;
-        final String code = codeR != null ? codeR : (codeT != null ? codeT : null);
-        if (indexR.length() != 0) year = (indexR.replaceAll("\\D", "")).substring(0, 2);
-        else year = (indexT.replaceAll("\\D", "")).substring(0, 2);
+        String[] ptype = new String[]{"Revision", "Theory"};
+        for (String pp : ptype) {
+            ParseInstallation currentUser = ParseInstallation.getCurrentInstallation();
+            TextView welcome = (TextView) getActivity().findViewById(R.id.welcome);
+            welcome.setText("Welcome " + currentUser.get("name"));
+            String indexR = (String) currentUser.get("indexR");
+            String indexT = (String) currentUser.get("indexT");
+            String codeR = indexR.length() != 0 ? indexR.substring(0, 2) : null;
+            String codeT = indexT.length() != 0 ? indexT.substring(0, 2) : null;
+            final String code = codeR != null ? codeR : (codeT != null ? codeT : null);
+            if (indexR.length() != 0) year = (indexR.replaceAll("\\D", "")).substring(0, 2);
+            else year = (indexT.replaceAll("\\D", "")).substring(0, 2);
 
-        ParseQuery<ParseObject> queryT = ParseQuery.getQuery("PaperLog");
-        queryT.whereExists("papertype");
-        queryT.selectKeys(Arrays.asList("batch", "paperNo", "papertype"));
-        queryT.addDescendingOrder("createdAt");
-        queryT.whereEqualTo("batch", "20" + year);
-        queryT.whereEqualTo("papertype", "Theory");
-        ParseObject theoryPaper = null;
-        try {
-            theoryPaper = queryT.getFirst();
-        } catch (ParseException e) {
-            e.printStackTrace();
+            ParseQuery<ParseObject> queryT = ParseQuery.getQuery("PaperLog");
+            queryT.whereExists("papertype");
+            queryT.selectKeys(Arrays.asList("batch", "paperNo", "papertype"));
+            queryT.addDescendingOrder("createdAt");
+            queryT.whereEqualTo("batch", "20" + year);
+            queryT.whereEqualTo("papertype", pp);
+            List<ParseObject> theoryPaper = null;
+            try {
+                theoryPaper = queryT.find();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (theoryPaper != null) {
+                for (ParseObject finalTheoryPaper : theoryPaper) {
+                    ParseQuery<ParseObject> paperQuerytown1 = ParseQuery.getQuery(finalTheoryPaper.get("papertype").toString() +
+                            finalTheoryPaper.get("batch").toString() +
+                            finalTheoryPaper.get("paperNo").toString());
+                    paperQuerytown1.whereEqualTo("index", pp == "Revision" ? indexR : indexT);
+                    ParseObject theorytwn = null;
+                    try {
+                        theorytwn = paperQuerytown1.getFirst();
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
+                    if (theorytwn != null) {
+                        HashMap<String, String> temp = new HashMap<String, String>();
+                        temp.put("PaperName", finalTheoryPaper.get("papertype").toString() + " " +
+                                finalTheoryPaper.get("batch").toString() + " " +
+                                finalTheoryPaper.get("paperNo").toString());
+
+                        temp.put("Marks", String.valueOf(theorytwn.get("marks")));
+                        temp.put("Rank", String.valueOf(theorytwn.get("twnrank")));
+
+                        list.add(temp);
+                    }
+
+                }
+            }
         }
 
-        final ParseObject finalTheoryPaper = theoryPaper;
-        ParseQuery<ParseObject> paperQuerytown1 = ParseQuery.getQuery(finalTheoryPaper.get("papertype").toString() +
-                finalTheoryPaper.get("batch").toString() +
-                finalTheoryPaper.get("paperNo").toString());
-        paperQuerytown1.orderByDescending("marks");
-        paperQuerytown1.whereStartsWith("index", code);
-        paperQuerytown1.setLimit(10);
-        try {
-            theorytwn = paperQuerytown1.find();
-        } catch (ParseException e1) {
-            e1.printStackTrace();
-        }
-        List<ParseObject> array1 = theorytwn;
-        for (int i = 0; i < array1.size(); i++) {
-
-            HashMap<String, String> temp = new HashMap<String, String>();
-            temp.put("Name", String.valueOf(theorytwn.get(i).get("index")));
-            temp.put("Town", String.valueOf(theorytwn.get(i).get("index")).substring(0, 2));
-            temp.put("Marks", String.valueOf(theorytwn.get(i).get("marks")));
-            temp.put("Rank", String.valueOf(theorytwn.get(i).get("twnrank")));
-
-            list.add(temp);
-        }
         adapter.notifyDataSetChanged();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_third, container, false);

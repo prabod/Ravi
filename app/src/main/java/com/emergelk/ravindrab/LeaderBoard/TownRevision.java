@@ -59,27 +59,29 @@ public class TownRevision extends ListFragment {
             Log.d("rev", "onActivityCreated:error");
         }
         final ParseObject finalRevPaper = revPaper;
-        ParseQuery<ParseObject> paperQuerytown = ParseQuery.getQuery(finalRevPaper.get("papertype").toString() +
-                finalRevPaper.get("batch").toString() +
-                finalRevPaper.get("paperNo").toString());
-        paperQuerytown.orderByDescending("marks");
-        paperQuerytown.whereStartsWith("index", code);
-        paperQuerytown.setLimit(10);
-        try {
-            revisiontwn = paperQuerytown.find();
-        } catch (ParseException e1) {
-            e1.printStackTrace();
-        }
+        if (finalRevPaper != null) {
+            ParseQuery<ParseObject> paperQuerytown = ParseQuery.getQuery(finalRevPaper.get("papertype").toString() +
+                    finalRevPaper.get("batch").toString() +
+                    finalRevPaper.get("paperNo").toString());
+            paperQuerytown.orderByDescending("marks");
+            paperQuerytown.whereStartsWith("index", code);
+            paperQuerytown.setLimit(10);
+            try {
+                revisiontwn = paperQuerytown.find();
+            } catch (ParseException e1) {
+                e1.printStackTrace();
+            }
 
-        for (int i = 0; i < revisiontwn.size(); i++) {
+            for (int i = 0; i < revisiontwn.size(); i++) {
 
-            HashMap<String, String> temp = new HashMap<String, String>();
-            temp.put("Name", String.valueOf(revisiontwn.get(i).get("index")));
-            temp.put("Town", String.valueOf(revisiontwn.get(i).get("index")).substring(0, 2));
-            temp.put("Marks", String.valueOf(revisiontwn.get(i).get("marks")));
-            temp.put("Rank", String.valueOf(revisiontwn.get(i).get("twnrank")));
+                HashMap<String, String> temp = new HashMap<String, String>();
+                temp.put("Name", String.valueOf(revisiontwn.get(i).get("index")));
+                temp.put("Town", String.valueOf(revisiontwn.get(i).get("index")).substring(0, 2));
+                temp.put("Marks", String.valueOf(revisiontwn.get(i).get("marks")));
+                temp.put("Rank", String.valueOf(revisiontwn.get(i).get("twnrank")));
 
-            list.add(temp);
+                list.add(temp);
+            }
         }
         adapter.notifyDataSetChanged();
     }

@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void promptLogin() {
-        finish();
         Intent logIn = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(logIn);
+        finish();
     }
 }

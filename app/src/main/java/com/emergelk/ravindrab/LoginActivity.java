@@ -282,22 +282,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             installation.put("username", currentUser.getUsername());
                             installation.put("name", mName);
                             installation.put("email", mEmail);
-                            installation.put("indexR", mIndexR);
-                            installation.put("indexT", mIndexT);
+                            installation.put("indexR", mIndexR.toUpperCase());
+                            installation.put("indexT", mIndexT.toUpperCase());
                             installation.save();
                             installation.pin();
-                            finish();
                             Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(goToMain);
+                            finish();
                         } catch (ParseException e1) {
                             e1.printStackTrace();
                         }
                     } else {
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT)
                                 .show();
-                        finish();
+
                         Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(goToMain);
+                        finish();
                     }
 
 

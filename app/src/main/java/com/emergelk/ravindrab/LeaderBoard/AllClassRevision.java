@@ -58,6 +58,7 @@ public class AllClassRevision extends ListFragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         if (revPaper != null) {
             ParseQuery<ParseObject> paperQuery = ParseQuery.getQuery(revPaper.get("papertype").toString() +
                     revPaper.get("batch").toString() +

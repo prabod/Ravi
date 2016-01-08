@@ -2,6 +2,7 @@ package com.emergelk.ravindrab.LeaderBoard;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,9 @@ public class TownRevision extends ListFragment {
             paperQuerytown.setLimit(10);
             try {
                 revisiontwn = paperQuerytown.find();
+                Log.d("rev", finalRevPaper.get("papertype").toString() +
+                        finalRevPaper.get("batch").toString() +
+                        finalRevPaper.get("paperNo").toString());
             } catch (ParseException e1) {
                 e1.printStackTrace();
             }

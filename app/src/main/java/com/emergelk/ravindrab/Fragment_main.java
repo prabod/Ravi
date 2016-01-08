@@ -25,7 +25,7 @@ public class Fragment_main extends Fragment {
         TextView marks = (TextView) getActivity().findViewById(R.id.marks1);
         TextView rank = (TextView) getActivity().findViewById(R.id.rank1);
         name.setText("Index");
-        town.setText("Name");
+        town.setText("Town");
         marks.setText("Marks");
         rank.setText("Rank");
     }
@@ -38,13 +38,13 @@ public class Fragment_main extends Fragment {
         mTabHost = (FragmentTabHost) mainView.findViewById(android.R.id.tabhost);
         mTabHost.setup(getActivity(), getChildFragmentManager(), R.id.tabcontent);
 
-        mTabHost.addTab(mTabHost.newTabSpec("fragmenta").setIndicator("All 4G LTE R"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmenta").setIndicator("All 4G LTE Rev"),
                 AllClassRevision.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("All 4G LTE T"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("All 4G LTE"),
                 AllClassTheory.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("4G LTE Revision"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("4G LTE Rev"),
                 TownRevision.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("4G LTE Theory"),
+        mTabHost.addTab(mTabHost.newTabSpec("fragmentd").setIndicator("4G LTE"),
                 TownTheory.class, null);
 
         return mainView;

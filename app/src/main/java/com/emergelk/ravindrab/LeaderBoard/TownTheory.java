@@ -22,6 +22,7 @@ public class TownTheory extends ListFragment {
     String town;
     LeaderBoardAdapter adapter;
     private List<ParseObject> theorytwn;
+    private List<ParseObject> theorylk;
     private ArrayList<HashMap<String, String>> list;
 
     @Override
@@ -44,13 +45,14 @@ public class TownTheory extends ListFragment {
 
         ParseQuery<ParseObject> queryT = ParseQuery.getQuery("PaperLog");
         queryT.whereExists("papertype");
-        queryT.selectKeys(Arrays.asList("batch", "paperNo", "papertype"));
-        queryT.addDescendingOrder("createdAt");
+        queryT.selectKeys(Arrays.asList("batch", "paperNo", "papertype", "createdAt"));
         queryT.whereEqualTo("batch", "20" + year);
         queryT.whereEqualTo("papertype", "Theory");
+        queryT.addDescendingOrder("createdAt");
         ParseObject theoryPaper = null;
         try {
-            theoryPaper = queryT.getFirst();
+            theorylk = queryT.find();
+            theoryPaper = theorylk.get(0);
         } catch (ParseException e) {
             e.printStackTrace();
         }

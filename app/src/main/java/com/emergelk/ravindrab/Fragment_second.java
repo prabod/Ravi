@@ -12,7 +12,6 @@ import com.android.volley.Cache;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.emergelk.ravindrab.Newsfeed.Adapter.FeedListAdapter;
 import com.emergelk.ravindrab.Newsfeed.app.AppController;
@@ -65,7 +64,7 @@ public class Fragment_second extends ListFragment implements AdapterView.OnItemC
 
                 @Override
                 public void onResponse(JSONObject response) {
-                    VolleyLog.d(TAG, "Response: " + response.toString());
+                    //VolleyLog.d(TAG, "Response: " + response.toString());
                     if (response != null) {
                         parseJsonFeed(response);
                     }
@@ -74,7 +73,7 @@ public class Fragment_second extends ListFragment implements AdapterView.OnItemC
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
+                    //VolleyLog.d(TAG, "Error: " + error.getMessage());
                 }
             });
 

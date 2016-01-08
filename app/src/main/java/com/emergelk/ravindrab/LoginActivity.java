@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -276,7 +275,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             user.signUpInBackground(new SignUpCallback() {
                 public void done(ParseException e) {
                     if (e == null) {
-                        Log.d("logged", "logged");
                         try {
                             ParseUser.logIn(mPhone, mPhone);
                             ParseUser currentUser = ParseUser.getCurrentUser();
@@ -295,7 +293,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             e1.printStackTrace();
                         }
                     } else {
-                        Log.d("logged", e.toString());
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT)
                                 .show();
                         finish();

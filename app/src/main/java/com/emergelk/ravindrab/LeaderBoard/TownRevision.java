@@ -2,7 +2,6 @@ package com.emergelk.ravindrab.LeaderBoard;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ public class TownRevision extends ListFragment {
     String town;
     LeaderBoardAdapter adapter;
     private List<ParseObject> revision;
+    private List<ParseObject> revisionlk;
     private List<ParseObject> revisiontwn;
     private ArrayList<HashMap<String, String>> list;
 
@@ -46,17 +46,16 @@ public class TownRevision extends ListFragment {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("PaperLog");
         query.whereExists("papertype");
-        query.selectKeys(Arrays.asList("batch", "paperNo", "papertype"));
-        query.addDescendingOrder("createdAt");
+        query.selectKeys(Arrays.asList("batch", "paperNo", "papertype", "createdAt"));
         query.whereEqualTo("batch", "20" + year);
         query.whereEqualTo("papertype", "Revision");
+        query.addDescendingOrder("createdAt");
         ParseObject revPaper = null;
         try {
-            revPaper = query.getFirst();
-            Log.d("rev", "onActivityCreated:");
+            revisionlk = query.find();
+            revPaper = revisionlk.get(0);
         } catch (ParseException e) {
             e.printStackTrace();
-            Log.d("rev", "onActivityCreated:error");
         }
         final ParseObject finalRevPaper = revPaper;
         if (finalRevPaper != null) {

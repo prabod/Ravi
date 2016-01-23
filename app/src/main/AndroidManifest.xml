@@ -16,7 +16,6 @@
         android:protectionLevel="signature" />
     <uses-permission android:name="com.emergelk.ravindrab.permission.C2D_MESSAGE" />
 
-
     <application
         android:name=".Newsfeed.app.AppController"
         android:allowBackup="true"

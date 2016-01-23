@@ -2,7 +2,6 @@ package com.emergelk.ravindrab;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +81,6 @@ public class Fragment_third extends ListFragment {
                         }
                     } catch (ParseException e1) {
                         e1.printStackTrace();
-                        Log.d("rev", "ppl");
                     }
                     if (theorytwn != null) {
                         HashMap<String, String> temp = new HashMap<String, String>();
@@ -92,14 +90,12 @@ public class Fragment_third extends ListFragment {
 
                         temp.put("Marks", String.valueOf(theorytwn.get("marks")));
                         temp.put("Rank", String.valueOf(theorytwn.get("twnrank")));
-
                         list.add(temp);
                     }
 
                 }
             }
         }
-
         adapter.notifyDataSetChanged();
     }
 

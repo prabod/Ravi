@@ -19,9 +19,9 @@ public class TabsAdapter extends FragmentStatePagerAdapter {
             case 0:
                 Fragment_main tab1 = new Fragment_main();
                 return tab1;
-            //case 1:
-            //    Fragment_second tab2 = new Fragment_second();
-            //    return tab2;
+            case 2:
+                Fragment_second tab2 = new Fragment_second();
+                return tab2;
             case 1:
                 Fragment_third tab3 = new Fragment_third();
                 return tab3;

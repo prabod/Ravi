@@ -23,6 +23,7 @@ public class AppController extends Application {
         return mInstance;
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();

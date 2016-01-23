@@ -29,7 +29,7 @@ public class Fragment_second extends ListFragment implements AdapterView.OnItemC
     private static final String TAG = MainActivity.class.getSimpleName();
     private FeedListAdapter listAdapter;
     private List<FeedItem> feedItems;
-    private String URL_FEED = "http://api.androidhive.info/feed/feed.json";
+    private String URL_FEED = "http://emergelk.com/results.json";
 
     @SuppressLint("NewApi")
     @Override
@@ -89,7 +89,6 @@ public class Fragment_second extends ListFragment implements AdapterView.OnItemC
     private void parseJsonFeed(JSONObject response) {
         try {
             JSONArray feedArray = response.getJSONArray("feed");
-
             for (int i = 0; i < feedArray.length(); i++) {
                 JSONObject feedObj = (JSONObject) feedArray.get(i);
 

@@ -2,6 +2,7 @@ package com.emergelk.ravindrab;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,6 @@ import android.view.MenuItem;
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,11 +21,18 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
+            Intent intentLogIn = getIntent();
+            Bundle bundle = intentLogIn.getExtras();
+            if (intentLogIn.hasExtra("message")) {
 
+                String location = intentLogIn.getStringExtra("message");
+                Snackbar sb = Snackbar.make(findViewById(android.R.id.content), location, Snackbar.LENGTH_INDEFINITE);
+                sb.show();
+            }
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
             tabLayout.addTab(tabLayout.newTab().setText("LeaderBoard"));
-            //tabLayout.addTab(tabLayout.newTab().setText("NewsFeed"));
             tabLayout.addTab(tabLayout.newTab().setText("My Profile"));
+            tabLayout.addTab(tabLayout.newTab().setText("News Feed"));
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
             final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);

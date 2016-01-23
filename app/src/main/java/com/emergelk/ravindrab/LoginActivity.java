@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        populateAutoComplete();
+        //populateAutoComplete();
 
         mPhoneView = (EditText) findViewById(R.id.phone);
         mNameView = (EditText) findViewById(R.id.name);
@@ -288,7 +288,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             installation.pin();
                             Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(goToMain);
-                            finish();
+                            //finish();
                         } catch (ParseException e1) {
                             e1.printStackTrace();
                         }
@@ -298,7 +298,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                         Intent goToMain = new Intent(LoginActivity.this, MainActivity.class);
                         startActivity(goToMain);
-                        finish();
+                        //finish();
                     }
 
 
